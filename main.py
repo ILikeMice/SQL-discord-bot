@@ -106,7 +106,7 @@ async def addcolumn(interaction: discord.Interaction, dbname: str, tablename: st
         cursor.execute("ALTER TABLE " + tablename + " ADD " + columnname + " " + columntype + f"({length})")
         await interaction.response.send_message(f"Added column {columnname} to table {tablename} in database {dbname}", ephemeral=True)
     except Exception as e:
-        await interaction.response.send_message(f"Failed to connect to database {dbname}: {e}", ephemeral=True)
+        await interaction.response.send_message(f"Error executing command with database {dbname}: {e}", ephemeral=True)
 
 
 
@@ -130,8 +130,7 @@ async def addrow(interaction: discord.Interaction, dbname: str, tablename: str, 
         cursor.execute("DESCRIBE " + tablename)
         thing = [i[0] for i in cursor.fetchall()]
         thing = str(thing).replace("'", "").replace("[", "").replace("]", "")
-        values = '"' + values
-        #.replace(",", '","') + '"'
+        values = '"' + values.replace(",", '","') + '"'
         print("INSERT INTO " + tablename + " (" + thing + ")" " VALUES (" + values + ")")
         cursor.execute("INSERT INTO " + tablename + " (" + thing + ")" " VALUES (" + values + ")")
         db.commit()
