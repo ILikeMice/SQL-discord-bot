@@ -38,9 +38,9 @@ async def adddatabase(interaction: discord.Interaction, name: str, hosturl: str,
         cursor = db.cursor()
         cursor.execute("CREATE DATABASE IF NOT EXISTS " + name)
         writedata(data)
-        await interaction.response.send_message(f"Added database {name} to the bot")
+        await interaction.response.send_message(f"Added database {name} to the bot", ephemeral=True)
     except Exception as e:
-        await interaction.response.send_message(f"Failed to add database {name} to the bot: {e}")
+        await interaction.response.send_message(f"Failed to add database {name} to the bot: {e}", ephemeral=True)
     
     
 
